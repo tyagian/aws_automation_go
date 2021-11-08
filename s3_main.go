@@ -107,7 +107,7 @@ func getObject(filename string) {
 
 func deleteObject(filename string) (resp *s3.DeleteObjectOutput) {
 	fmt.Println("Deleting: ", filename)
-	resp, err := s3session.DeleteObject(&s3.DeleteObjectOutput{
+	resp, err := s3session.DeleteObject(&s3.DeleteObjectInput{
 		Bucket: aws.String(BUCKET_NAME),
 		Key:    aws.String(filename),
 	})
@@ -118,24 +118,27 @@ func deleteObject(filename string) (resp *s3.DeleteObjectOutput) {
 }
 
 func main() {
-	folder := "files"
-	file, _ := ioutil.ReadDir(folder)
-	fmt.Println(files)
-	// bulk upload files
-	for _, file := range files {
-		if file.IsDir() {
-			continue
-		} else {
-			uploadObject(folder + "/" + file.Name())
+	/*
+			folder := "files"
+			file, _ := ioutil.ReadDir(folder)
+			fmt.Println(files)
+			// bulk upload files
+			for _, file := range files {
+				if file.IsDir() {
+					continue
+				} else {
+					uploadObject(folder + "/" + file.Name())
+				}
+			}
+
+		for _, object := range listObjects().Contents {
+			getobject(*object.Key)
+			deleteObject(*object.Key)
 		}
-	}
-
-	for _, object := range listObjects().Contents {
-		getobject(*object.Key)
-		deleteObject(*object.Key)
-	}
+	*/
 	fmt.Println(listObjects())
-
+	fmt.Println(deleteObject("male_aws_gopher.png"))
+	fmt.Println(listObjects())
 	//fmt.Println(listBuckets())
 	//fmt.Println(createBucket())
 	//fmt.Println(listBuckets())
